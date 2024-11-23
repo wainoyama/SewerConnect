@@ -40,7 +40,7 @@ header {
 .header-content {
     display: flex;
     justify-content: space-between;
-    align-items: left;
+    align-items: center;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
@@ -49,7 +49,6 @@ header {
 .logo {
     display: flex;
     align-items: center;
-    margin-left: -300px;
 }
 
 .logo img {
