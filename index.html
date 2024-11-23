@@ -1,117 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SewerConnect</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <title>Sewer Connect | Libato, San Juan, Batangas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <header class="main-header">
-        <div class="logo">
-            <img src="assets/logo.png" alt="SewerConnect Logo">
-            <h2>SewerConnect</h2>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="./assets/logo.png" alt="Sewer Connect Logo">
+                <h1>Sewer Connect</h1>
+            </div>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#profiles">Mga Mananahi</a></li>
-                <li><a href="#catalog">Catalog</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
     </header>
 
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#contacts">Mga Kontak</a></li>
+            <li><a href="#about">Tungkol sa Amin</a></li>
+            <li><a href="#researchers">Mga Mananaliksik</a></li>
+        </ul>
+    </nav>
+
     <main>
-        <section class="hero">
-            <h2>Connecting Sewers with Clients in Libato</h2>
-            <p>Boost your sales by showcasing your works and materials.</p>
-        </section>
-        <section id="profiles" class="section">
-            <h2>Mga Mananahi</h2>
-            <div class="profile-container">
-                <div class="profile">
-                    <h3>Maria Clara</h3>
-                    <p>Specializes in: Formal Dresses</p>
-                    <button onclick="showProfile('Maria Clara')">View More</button>
+        <div class="container">
+            <section id="home">
+
+                <h3>Libato, San Juan, Batangas Live Map</h3>
+                <div id="map"></div>
+                <h3>Pangkalahatang-ideya ng Website</h3>
+                <ul>
+                    <li>Ang website na ito ay ginawa para tulungan ang mga mananahi at kliyente na makipag-ugnayan nang mas madali.</li>
+                    <li>Sa platform na ito, ang mga mananahi ay makakapag-alok ng kanilang serbisyo, habang ang mga kliyente naman ay makakapagtingin ng kanilang mga kailangan.</li>
+                    <li>Layunin nitong gawing mas mabilis at mas maginhawa ang proseso ng paghahanap ng mga serbisyo sa pananahi sa Libato, San Juan, Batangas.</li>
+                </ul>
+
+                <h3>Mga Tampok na Produkto at Serbisyo</h3>
+                <p>Nagtatampok ito ng mga natapos na produkto ng mga mananahi tulad ng damit, pantalon, pang cover sa sofa, gown, costumes, school uniforms, bedsheets, curtains at iba pang fashion items.</p>
+                <p>Makikita rin dito ang mga makina na ginagamit nila gaya ng high speed at edging sewing machine, pati na ang mga materyales tulad ng tela at sinulid.</p>
+            </section>
+
+            <section id="contacts">
+                <div class="contact-card">
+                    <img src="./assets/lerma.JPG" alt="Lerma Molar">
+                    <div>
+                        <h3>Lerma Molar</h3>
+                        <p>Cellphone: 09603816635</p>
+                        <p>Email: molarlerma@gmail.com</p>
+                        <p>Facebook: <a href="#">Lerma's Facebook</a></p>
+                        <button class="btn" onclick="bookSewer('Lerma Molar')">Book</button>
+                    </div>
                 </div>
-                <div class="profile">
-                    <h3>Juan Dela Cruz</h3>
-                    <p>Specializes in: Barong Tagalog</p>
-                    <button onclick="showProfile('Juan Dela Cruz')">View More</button>
+
+                <div class="contact-card">
+                    <img src="./assets/matilde.JPG" alt="Matilde Ronquillo Andes">
+                    <div>
+                        <h3>Matilde Ronquillo Andes</h3>
+                        <p>Cellphone: 09287756302</p>
+                        <p>Email: matildeandes@gmail.com</p>
+                        <p>Facebook: <a href="#">Matilde's Facebook</a></p>
+                        <button class="btn" onclick="bookSewer('Matilde Ronquillo Andes')">Book</button>
+                    </div>
                 </div>
-            </div>
-            <div class="profile-container">
-                <div class="profile">
-                    <h3>Maria Clara</h3>
-                    <p>Specializes in: Formal Dresses</p>
-                    <button onclick="showProfile('Maria Clara')">View More</button>
+
+                <div class="contact-card">
+                    <img src="./assets/porto.JPG" alt="Gregoria Porto">
+                    <div>
+                        <h3>Gregoria Porto</h3>
+                        <p>Cellphone: 09817503346</p>
+                        <p>Email: gregoriaporto@gmail.com</p>
+                        <p>Facebook: <a href="#">Gregoria's Facebook</a></p>
+                        <button class="btn" onclick="bookSewer('Gregoria Porto')">Book</button>
+                    </div>
                 </div>
-                <div class="profile">
-                    <h3>Juan Dela Cruz</h3>
-                    <p>Specializes in: Barong Tagalog</p>
-                    <button onclick="showProfile('Juan Dela Cruz')">View More</button>
+
+                <div class="contact-card">
+                    <img src="./assets/juliet.JPG" alt="Juliet Monteroso">
+                    <div>
+                        <h3>Juliet Monteroso</h3>
+                        <p>Cellphone: 09500359844</p>
+                        <p>Email: juliet03142820@gmail.com</p>
+                        <p>Facebook Page: <a href="#">Juliet's Creation</a></p>
+                        <p>Facebook: <a href="#">Juliet's Facebook</a></p>
+                        <button class="btn" onclick="bookSewer('Juliet Monteroso')">Book</button>
+                    </div>
                 </div>
-            </div>
-            <div class="profile-container">
-                <div class="profile">
-                    <h3>Maria Clara</h3>
-                    <p>Specializes in: Formal Dresses</p>
-                    <button onclick="showProfile('Maria Clara')">View More</button>
+
+                <div class="contact-card">
+                    <img src="./assets/Renante.jpg" alt="Renante Masenas">
+                    <div>
+                        <h3>Renante Masenas</h3>
+                        <p>Facebook: <a href="#">Renante's Facebook</a></p>
+                        <button class="btn" onclick="bookSewer('Renante Masenas')">Book</button>
+                    </div>
                 </div>
-                <div class="profile">
-                    <h3>Juan Dela Cruz</h3>
-                    <p>Specializes in: Barong Tagalog</p>
-                    <button onclick="showProfile('Juan Dela Cruz')">View More</button>
+
+                <div class="contact-card">
+                    <img src="./assets/jovita.JPG" alt="Jovita Fancubit">
+                    <div>
+                        <h3>Jovita Fancubit</h3>
+                        <p>Cellphone: 09317692758</p>
+                        <p>Email: jovitafancubit@gmail.com</p>
+                        <p>Facebook: <a href="#">Jovita's Facebook</a></p>
+                        <button class="btn" onclick="bookSewer('Jovita Fancubit')">Book</button>
+                    </div>
                 </div>
-            </div>
-        </section>
-        <section id="catalog" class="section">
-            <h2>Catalog</h2>
-            <p>Piliin ang mga serbisyo na gusto mong i-avail!</p>
-            <button onclick="bookService()">Book Now</button>
-        </section>
-        <section id="contact-form">
-            <h2>Contact Us</h2>
-            <form>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-        
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-        
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
-        
-                <button type="submit">Send Message</button>
-            </form>
-        </section>
-        
+            </section>
+
+            <section id="about">
+                <h2>Tungkol sa Amin</h2>
+                <p>Ang aming mga skilled na mananahi ay gumagawa ng iba't ibang produkto, mula sa pang-araw-araw na kasuotan hanggang sa mga espesyal na items. Narito ang ilang halimbawa ng mga produkto na aming inaalok:</p>
+                
+                <div class="product-gallery">
+                    <img src="path_to_clothes_image.jpg" alt="Mga Damit">
+                    <img src="path_to_pants_image.jpg" alt="Mga Pantalon">
+                    <img src="path_to_sofa_covers_image.jpg" alt="Pang Cover sa Sofa">
+                    <img src="path_to_gowns_image.jpg" alt="Mga Gown">
+                    <img src="path_to_costumes_image.jpg" alt="Mga Costume">
+                    <img src="path_to_uniforms_image.jpg" alt="Mga School Uniform">
+                    <img src="path_to_bedsheets_image.jpg" alt="Mga Bedsheet">
+                    <img src="path_to_curtains_image.jpg" alt="Mga Kurtina">
+                </div>
+
+                <h3>Amin Mga Kagamitan</h3>
+                <div class="product-gallery">
+                    <img src="path_to_high_speed_machine.jpg" alt="High-Speed Sewing Machine">
+                    <img src="path_to_edging_machine.jpg" alt="Edging Sewing Machine">
+                    <img src="path_to_fabrics.jpg" alt="Tela">
+                    <img src="path_to_threads.jpg" alt="Sinulid">
+                </div>
+            </section>
+
+            <section id="researchers">
+                <h2>Kilalanin ang aming mga Mananaliksik</h2>
+                <p>Ang mga utak sa likod ng "Development of Client-to-Sewer Marketing Communication Platform in Libato, San Juan, Batangas"</p>
+            
+                <div class="researcher">
+                    <img src="./assets/researchers/aclan.JPG" alt="Mary Grace A. Aclan">
+                    <h3>Mary Grace A. Aclan</h3>
+                </div>
+            
+                <div class="researcher">
+                    <img src="./assets/researchers/kim.JPG" alt="Kim Ariola">
+                    <h3>Kim Ariola</h3>
+                </div>
+            
+                <div class="researcher">
+                    <img src="./assets/researchers/garma.JPG" alt="Marc Lester L. Garma">
+                    <h3>Marc Lester L. Garma</h3>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer>
-        <p>&copy; 2024 SewerConnect. All rights reserved.</p>
+        <p>&copy; 2024 Sewer Connect</p>
     </footer>
-
-    <script>
-        function showProfile(name) {
-            Swal.fire({
-                title: name,
-                text: 'More details about ' + name + '.',
-                icon: 'info',
-                confirmButtonText: 'Close'
-            });
-        }
-
-        function bookService() {
-            Swal.fire({
-                title: 'Booking Service',
-                text: 'This feature is under development.',
-                icon: 'warning',
-                confirmButtonText: 'Okay'
-            });
-        }
-    </script>
 </body>
 </html>
