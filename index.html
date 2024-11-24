@@ -7,10 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="script.js" defer></script>
-    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
     <header>
@@ -23,8 +22,10 @@
     </header>
 
     <nav>
-        <ul>
+        <button id="menu-toggle" class="menu-toggle">Menu</button>
+        <ul id="nav-menu">
             <li><a href="#home">Home</a></li>
+            <li><a href="#sample-photos">Mga Larawan</a></li>
             <li><a href="#contacts">Mga Kontak</a></li>
             <li><a href="#about">Tungkol sa Amin</a></li>
             <li><a href="#researchers">Mga Mananaliksik</a></li>
@@ -34,8 +35,7 @@
     <main>
         <div class="container">
             <section id="home">
-
-                <h3>Libato, San Juan, Batangas Live Map</h3>
+                <h2>Libato, San Juan, Batangas Live Map</h2>
                 <div id="map"></div>
                 <h3>Pangkalahatang-ideya ng Website</h3>
                 <ul>
@@ -49,96 +49,36 @@
                 <p>Makikita rin dito ang mga makina na ginagamit nila gaya ng high speed at edging sewing machine, pati na ang mga materyales tulad ng tela at sinulid.</p>
             </section>
 
+            <section id="sample-photos">
+                <h2>Mga Larawan ng Aming Gawa</h2>
+                <div class="photo-category">
+                    <h3>Mga Materyales</h3>
+                    <div class="photo-grid" id="materials-grid"></div>
+                </div>
+                <div class="photo-category">
+                    <h3>Proseso ng Paggawa</h3>
+                    <div class="photo-grid" id="process-grid"></div>
+                </div>
+                <div class="photo-category">
+                    <h3>Mga Tapos na Produkto</h3>
+                    <div class="photo-grid" id="final-product-grid"></div>
+                </div>
+            </section>
+
             <section id="contacts">
-                <div class="contact-card">
-                    <img src="./assets/lerma.JPG" alt="Lerma Molar">
-                    <div>
-                        <h3>Lerma Molar</h3>
-                        <p>Cellphone: 09603816635</p>
-                        <p>Email: molarlerma@gmail.com</p>
-                        <p>Facebook: <a href="https://www.facebook.com/share/18ARft1qnD/?mibextid=LQQJ4d">Lerma's Facebook</a></p>
-                        <button class="btn" onclick="bookSewer('Lerma Molar')">Book</button>
-                    </div>
-                </div>
-
-                <div class="contact-card">
-                    <img src="./assets/matilde.JPG" alt="Matilde Ronquillo Andes">
-                    <div>
-                        <h3>Matilde Ronquillo Andes</h3>
-                        <p>Cellphone: 09287756302</p>
-                        <p>Email: matildeandes@gmail.com</p>
-                        <p>Facebook: <a href="https://www.facebook.com/share/18KYPHfeoT/?mibextid=LQQJ4d">Matilde's Facebook</a></p>
-                        <button class="btn" onclick="bookSewer('Matilde Ronquillo Andes')">Book</button>
-                    </div>
-                </div>
-
-                <div class="contact-card">
-                    <img src="./assets/porto.JPG" alt="Gregoria Porto">
-                    <div>
-                        <h3>Gregoria Porto</h3>
-                        <p>Cellphone: 09817503346</p>
-                        <p>Email: gregoriaporto@gmail.com</p>
-                        <p>Facebook: <a href="https://www.facebook.com/share/1GrfNxhKkY/?mibextid=LQQJ4d">Gregoria's Facebook</a></p>
-                        <button class="btn" onclick="bookSewer('Gregoria Porto')">Book</button>
-                    </div>
-                </div>
-
-                <div class="contact-card">
-                    <img src="./assets/juliet.JPG" alt="Juliet Monteroso">
-                    <div>
-                        <h3>Juliet Monteroso</h3>
-                        <p>Cellphone: 09500359844</p>
-                        <p>Email: juliet03142820@gmail.com</p>
-                        <p>Facebook Page: <a href="#">Juliet's Creation</a></p>
-                        <p>Facebook: <a href="https://www.facebook.com/share/1CvvfoEkmh/?mibextid=LQQJ4d">Juliet's Facebook</a></p>
-                        <button class="btn" onclick="bookSewer('Juliet Monteroso')">Book</button>
-                    </div>
-                </div>
-
-                <div class="contact-card">
-                    <img src="./assets/Renante.jpg" alt="Renante Masenas">
-                    <div>
-                        <h3>Renante Masenas</h3>
-                        <p>Facebook: <a href="https://www.facebook.com/share/1Adxop157Y/?mibextid=LQQJ4d">Renante's Facebook</a></p>
-                        <button class="btn" onclick="bookSewer('Renante Masenas')">Book</button>
-                    </div>
-                </div>
-
-                <div class="contact-card">
-                    <img src="./assets/jovita.JPG" alt="Jovita Fancubit">
-                    <div>
-                        <h3>Jovita Fancubit</h3>
-                        <p>Cellphone: 09317692758</p>
-                        <p>Email: jovitafancubit@gmail.com</p>
-                        <p>Facebook: <a href="https://www.facebook.com/share/184yA3M8XG/?mibextid=LQQJ4d">Jovita's Facebook</a></p>
-                        <button class="btn" onclick="bookSewer('Jovita Fancubit')">Book</button>
-                    </div>
-                </div>
+                <h2>Mga Kontak</h2>
+                <div class="contact-grid" id="contact-grid"></div>
             </section>
 
             <section id="about">
                 <h2>Tungkol sa Amin</h2>
-                
+                <p>Ang Sewer Connect ay isang platform na naglalayong iugnay ang mga mananahi at mga kliyente sa Libato, San Juan, Batangas. Aming misyon na gawing mas madali at mas epektibo ang proseso ng paghahanap at pag-book ng mga serbisyo sa pananahi.</p>
             </section>
 
             <section id="researchers">
                 <h2>Kilalanin ang aming mga Mananaliksik</h2>
                 <p>Ang mga utak sa likod ng "Development of Client-to-Sewer Marketing Communication Platform in Libato, San Juan, Batangas"</p>
-            
-                <div class="researcher">
-                    <img src="./assets/researchers/aclan.JPG" alt="Mary Grace A. Aclan">
-                    <h3>Mary Grace A. Aclan</h3>
-                </div>
-            
-                <div class="researcher">
-                    <img src="./assets/researchers/kim.JPG" alt="Kim Ariola">
-                    <h3>Kim Ariola</h3>
-                </div>
-            
-                <div class="researcher">
-                    <img src="./assets/researchers/garma.JPG" alt="Marc Lester L. Garma">
-                    <h3>Marc Lester L. Garma</h3>
-                </div>
+                <div class="researcher-grid" id="researcher-grid"></div>
             </section>
         </div>
     </main>
@@ -146,5 +86,18 @@
     <footer>
         <p>&copy; 2024 Sewer Connect</p>
     </footer>
+
+    <div id="photo-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <div class="photo-container">
+                <div class="photo-scroll" id="photo-scroll"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
+
