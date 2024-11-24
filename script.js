@@ -145,7 +145,9 @@ document.addEventListener('DOMContentLoaded', function() {
             { src: "./assets/about us/f (21).jpg", caption: "Final Products" },
             { src: "./assets/about us/f (22).jpg", caption: "Final Products" },
             { src: "./assets/about us/f (23).jpg", caption: "Final Products" },
-            { src: "./assets/about us/f (24).jpg", caption: "Final Products" }
+            { src: "./assets/about us/f (24).jpg", caption: "Final Products" },
+            { src: "./assets/about us/f (25).jpg", caption: "Final Products" },
+            { src: "./assets/about us/f (26).jpg", caption: "Final Products" }
           ]
           
     };
