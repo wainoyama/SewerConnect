@@ -78,26 +78,24 @@ document.addEventListener('DOMContentLoaded', function() {
         contactGrid.appendChild(contactCard);
     });
 
-    // Researcher data
-    const researchers = [
-        { name: "Mary Grace A. Aclan", image: "./assets/researchers/aclan.JPG" },
-        { name: "Kim Ariola", image: "./assets/researchers/kim.JPG" },
-        { name: "Marc Lester L. Garma", image: "./assets/researchers/garma.JPG" }
-    ];
 
-    // Populate researchers
+    const researchers = [
+        { name: "Mary Grace A. Aclan", image: "./assets/researchers/aclan.JPG", fb: "https://www.facebook.com/share/18HysXDnMM/?mibextid=LQQJ4d" },
+        { name: "Kim Ariola", image: "./assets/researchers/kim.JPG", fb: "https://www.facebook.com/share/1Co6mu4i8C/?mibextid=LQQJ4d" },
+        { name: "Marc Lester L. Garma", image: "./assets/researchers/garma.JPG", fb: "https://www.facebook.com/share/1EkAVwXFdL/?mibextid=LQQJ4d" }
+    ];
+    
     const researcherGrid = document.getElementById('researcher-grid');
     researchers.forEach(researcher => {
         const researcherCard = document.createElement('div');
         researcherCard.className = 'researcher-card';
         researcherCard.innerHTML = `
             <img src="${researcher.image}" alt="${researcher.name}">
-            <h3>${researcher.name}</h3>
+            <h3><a href="${researcher.fb}" target="_blank">${researcher.name}</a></h3>
         `;
         researcherGrid.appendChild(researcherCard);
     });
 
-    // Sample photos data
     const samplePhotos = {
         materials: [
             { src: "./assets/about us/mats (1).jpg", caption: "Materyales" },
@@ -150,7 +148,19 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
     };
 
-    // Populate sample photos
+    const sampleVideos = [
+        { src: "./assets/home/samp_vid (1).mp4", caption: "Video 1" },
+        { src: "./assets/home/samp_vid (2).mp4", caption: "Video 2" },
+        { src: "./assets/home/samp_vid (3).mp4", caption: "Video 3" }
+    ];
+
+    const groupPhotos = [
+        { src: "./assets/home/g (1).jpg", caption: "Group Photo 1" },
+        { src: "./assets/home/g (2).jpg", caption: "Group Photo 2" },
+        { src: "./assets/home/g (3).jpg", caption: "Group Photo 3" },
+        { src: "./assets/home/g (4).jpg", caption: "Group Photo 4" }
+    ];
+
     function populatePhotoGrid(gridId, photos, category) {
         const grid = document.getElementById(gridId);
         photos.forEach((photo, index) => {
@@ -169,7 +179,35 @@ document.addEventListener('DOMContentLoaded', function() {
     populatePhotoGrid('process-grid', samplePhotos.process, 'process');
     populatePhotoGrid('final-product-grid', samplePhotos.finalProduct, 'finalProduct');
 
-    // Photo modal functionality
+    function populateVideoGrid(gridId, videos) {
+        const grid = document.getElementById(gridId);
+        videos.forEach((video, index) => {
+            const videoItem = document.createElement('div');
+            videoItem.className = 'video-item';
+            videoItem.innerHTML = `
+                <video src="${video.src}" controls></video>
+                <div class="caption">${video.caption}</div>
+            `;
+            grid.appendChild(videoItem);
+        });
+    }
+
+    function populateGroupPhotos(containerId, photos) {
+        const container = document.getElementById(containerId);
+        photos.forEach(photo => {
+            const img = document.createElement('img');
+            img.src = photo.src;
+            img.alt = photo.caption;
+            img.className = 'group-photo';
+            img.title = photo.caption;
+            container.appendChild(img);
+        });
+    }
+
+    populateVideoGrid('video-grid', sampleVideos);
+    populateGroupPhotos('group-photos', groupPhotos);
+
+
     const photoModal = document.getElementById('photo-modal');
     const modalTitle = document.getElementById('modal-title');
     const photoScroll = document.getElementById('photo-scroll');
@@ -217,7 +255,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Booking function with SweetAlert
 function bookSewer(sewerName) {
     Swal.fire({
         title: 'Book ' + sewerName,
