@@ -1,3 +1,11 @@
+<?php
+require_once 'authentication.php';
+
+if (!isLoggedIn()) {
+    header('Location: ./users/login.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="tl">
 <head>
@@ -18,24 +26,27 @@
                 <img src="./assets/logo.png" alt="Sewer Connect Logo">
                 <h1>Sewer Connect</h1>
             </div>
+            <div class="user-actions">
+                <span>Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?></span>
+                <a href="./users/logout.php">Logout</a>
+            </div>
         </div>
     </header>
 
     <nav>
         <button id="menu-toggle" class="menu-toggle">Menu</button>
         <ul id="nav-menu">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#sample-photos">Mga Larawan</a></li>
-            <li><a href="#contacts">Mga Kontak</a></li>
-            <li><a href="#about">Tungkol sa Amin</a></li>
-            <li><a href="#researchers">Mga Mananaliksik</a></li>
+            <li><a href="#home" class="tab-link" data-tab="home">Home</a></li>
+            <li><a href="#sample-photos" class="tab-link" data-tab="sample-photos">Mga Larawan</a></li>
+            <li><a href="#contacts" class="tab-link" data-tab="contacts">Mga Kontak</a></li>
+            <li><a href="#about" class="tab-link" data-tab="about">Tungkol sa Amin</a></li>
+            <li><a href="#researchers" class="tab-link" data-tab="researchers">Mga Mananaliksik</a></li>
         </ul>
     </nav>
 
     <main>
         <div class="container">
-            <section id="home">
-                <h2>Libato, San Juan, Batangas Live Map</h2>
+            <section id="home" class="tab-content">
                 <div id="map"></div>
                 <h3>Pangkalahatang-ideya ng Website</h3>
                 <ul>
@@ -43,13 +54,12 @@
                     <li>Sa platform na ito, ang mga mananahi ay makakapag-alok ng kanilang serbisyo, habang ang mga kliyente naman ay makakapagtingin ng kanilang mga kailangan.</li>
                     <li>Layunin nitong gawing mas mabilis at mas maginhawa ang proseso ng paghahanap ng mga serbisyo sa pananahi sa Libato, San Juan, Batangas.</li>
                 </ul>
-
                 <h3>Mga Tampok na Produkto at Serbisyo</h3>
                 <p>Nagtatampok ito ng mga natapos na produkto ng mga mananahi tulad ng damit, pantalon, pang cover sa sofa, gown, costumes, school uniforms, bedsheets, curtains at iba pang fashion items.</p>
                 <p>Makikita rin dito ang mga makina na ginagamit nila gaya ng high speed at edging sewing machine, pati na ang mga materyales tulad ng tela at sinulid.</p>
             </section>
 
-            <section id="sample-photos">
+            <section id="sample-photos" class="tab-content">
                 <h2>Mga Larawan ng Aming Gawa</h2>
                 <div class="photo-category">
                     <h3>Mga Materyales</h3>
@@ -69,18 +79,18 @@
                 </div>
             </section>
 
-            <section id="contacts">
+            <section id="contacts" class="tab-content">
                 <h2>Mga Kontak</h2>
                 <div class="contact-grid" id="contact-grid"></div>
             </section>
 
-            <section id="about">
+            <section id="about" class="tab-content">
                 <h2>Tungkol sa Amin</h2>
                 <p>Ang Sewer Connect ay isang platform na naglalayong iugnay ang mga mananahi at mga kliyente sa Libato, San Juan, Batangas. Aming misyon na gawing mas madali at mas epektibo ang proseso ng paghahanap at pag-book ng mga serbisyo sa pananahi.</p>
                 <div class="group-photos" id="group-photos"></div>
             </section>
 
-            <section id="researchers">
+            <section id="researchers" class="tab-content">
                 <h2>Kilalanin ang aming mga Mananaliksik</h2>
                 <p>Ang mga utak sa likod ng "Development of Client-to-Sewer Marketing Communication Platform in Libato, San Juan, Batangas"</p>
                 <div class="researcher-grid" id="researcher-grid"></div>
