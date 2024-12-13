@@ -25,59 +25,65 @@ document.addEventListener('DOMContentLoaded', function() {
             image: "./assets/lerma.JPG",
             cellphone: "09603816635",
             email: "lermamolar@example.com",
-            facebook: "https://www.facebook.com/share/18ARft1qnD/?mibextid=LQQJ4d",
-            rating: 0
+            facebook: "https://www.facebook.com/share/18ARft1qnD/?mibextid=LQQJ4d"
         },
         {
             name: "Matilde Ronquillo Andes",
             image: "./assets/matilde.JPG",
             cellphone: "09287756302",
             email: "matildeandes@example.com",
-            facebook: "https://www.facebook.com/share/18KYPHfeoT/?mibextid=LQQJ4d",
-            rating: 0
+            facebook: "https://www.facebook.com/share/18KYPHfeoT/?mibextid=LQQJ4d"
         },
         {
             name: "Gregoria Porto",
             image: "./assets/porto.JPG",
             cellphone: "09817503346",
             email: "gregoriaporto@example.com",
-            facebook: "https://www.facebook.com/share/1GrfNxhKkY/?mibextid=LQQJ4d",
-            rating: 0
+            facebook: "https://www.facebook.com/share/1GrfNxhKkY/?mibextid=LQQJ4d"
         },
         {
             name: "Juliet Monteroso",
             image: "./assets/juliet.JPG",
             cellphone: "09500359844",
             email: "julietmonteroso@example.com",
-            facebook: "https://www.facebook.com/share/1CvvfoEkmh/?mibextid=LQQJ4d",
-            rating: 0
+            facebook: "https://www.facebook.com/share/1CvvfoEkmh/?mibextid=LQQJ4d"
         },
         {
             name: "Renante Masenas",
             image: "./assets/Renante.jpg",
-            facebook: "https://www.facebook.com/share/1Adxop157Y/?mibextid=LQQJ4d",
-            rating: 0
+            facebook: "https://www.facebook.com/share/1Adxop157Y/?mibextid=LQQJ4d"
         },
         {
             name: "Jovita Fancubit",
             image: "./assets/jovita.JPG",
             cellphone: "09317692758",
             email: "jovitafancubit@example.com",
-            facebook: "https://www.facebook.com/share/184yA3M8XG/?mibextid=LQQJ4d",
-            rating: 0
+            facebook: "https://www.facebook.com/share/184yA3M8XG/?mibextid=LQQJ4d"
         },
         {
-            name: "testing",
+            name: "test",
             image: "",
-            cellphone: "",
+            cellphone: "09553447568",
             email: "jpreytapogi@gmail.com",
-            facebook: "https://www.facebook.com/share/18ARft1qnD/?mibextid=LQQJ4d",
-            rating: 0
-        },
+            facebook: ""
+        }
     ];
 
     // Populate contacts
     const contactGrid = document.getElementById('contact-grid');
+    contacts.forEach(contact => {
+        const contactCard = document.createElement('div');
+        contactCard.className = 'contact-card';
+        contactCard.innerHTML = `
+            <img src="${contact.image}" alt="${contact.name}">
+            <h3>${contact.name}</h3>
+            ${contact.cellphone ? `<p>Cellphone: ${contact.cellphone}</p>` : ''}
+            ${contact.email ? `<p>Email: ${contact.email}</p>` : ''}
+            <p><a href="${contact.facebook}" target="_blank">Facebook Profile</a></p>
+            <button onclick="bookSewer('${contact.name}', '${contact.email}')">Book</button>
+        `;
+        contactGrid.appendChild(contactCard);
+    });
 
     const researchers = [
         { name: "Mary Grace A. Aclan", image: "./assets/researchers/aclan.JPG", fb: "https://www.facebook.com/share/18HysXDnMM/?mibextid=LQQJ4d" },
@@ -324,35 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Show the default tab (home) on page load
     showTab('home');
-
-
-    populateContacts(contacts);
 });
-
-function populateContacts(contacts) {
-    const contactGrid = document.getElementById('contact-grid');
-    contactGrid.innerHTML = ''; // Clear existing contacts
-
-    contacts.forEach(contact => {
-        const contactCard = document.createElement('div');
-        contactCard.className = 'contact-card';
-        contactCard.dataset.sewer = contact.name;
-
-        contactCard.innerHTML = `
-            <img src="${contact.image}" alt="${contact.name}">
-            <h3>${contact.name}</h3>
-            ${contact.cellphone ? `<p>Cellphone: ${contact.cellphone}</p>` : ''}
-            ${contact.email ? `<p>Email: ${contact.email}</p>` : ''}
-            <p><a href="${contact.facebook}" target="_blank">Facebook Profile</a></p>
-            <p class="rating-display">Loading rating...</p>
-            <button onclick="bookSewer('${contact.name}', '${contact.email}')">Book</button>
-            <button onclick="rateSewer('${contact.name}')">Rate</button>
-        `;
-
-        contactGrid.appendChild(contactCard);
-        updateRatingDisplay(contact.name);
-    });
-}
 
 function bookSewer(sewerName, sewerEmail) {
     Swal.fire({
@@ -383,12 +361,20 @@ function bookSewer(sewerName, sewerEmail) {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => response.text())
+            .then(text => {
+                try {
+                    return JSON.parse(text);
+                } catch (error) {
+                    console.error('Error parsing JSON:', text);
+                    throw new Error('Server response was not valid JSON');
+                }
+            })
             .then(data => {
                 if (data.success) {
                     return data.message;
                 } else {
-                    throw new Error(data.message);
+                    throw new Error(data.message || 'An unknown error occurred');
                 }
             });
         }
@@ -397,93 +383,7 @@ function bookSewer(sewerName, sewerEmail) {
             Swal.fire('Booked!', result.value, 'success');
         }
     }).catch(error => {
+        console.error('Booking error:', error);
         Swal.fire('Error', error.message, 'error');
     });
 }
-
-function rateSewer(sewerName, currentRating) {
-    Swal.fire({
-        title: 'Rate ' + sewerName,
-        html: `
-            <div class="rating">
-                <input type="radio" id="star5" name="rating" value="5" ${currentRating === 5 ? 'checked' : ''}>
-                <label for="star5">★</label>
-                <input type="radio" id="star4" name="rating" value="4" ${currentRating === 4 ? 'checked' : ''}>
-                <label for="star4">★</label>
-                <input type="radio" id="star3" name="rating" value="3" ${currentRating === 3 ? 'checked' : ''}>
-                <label for="star3">★</label>
-                <input type="radio" id="star2" name="rating" value="2" ${currentRating === 2 ? 'checked' : ''}>
-                <label for="star2">★</label>
-                <input type="radio" id="star1" name="rating" value="1" ${currentRating === 1 ? 'checked' : ''}>
-                <label for="star1">★</label>
-            </div>
-        `,
-        focusConfirm: false,
-        preConfirm: () => {
-            const rating = document.querySelector('input[name="rating"]:checked');
-            if (!rating) {
-                Swal.showValidationMessage('Please select a rating');
-                return false;
-            }
-            return rating.value;
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            submitRating(sewerName, result.value);
-        }
-    });
-}
-
-function submitRating(sewerName, rating) {
-    const formData = new FormData();
-    formData.append('sewerName', sewerName);
-    formData.append('rating', rating);
-
-    fetch('handle_ratings.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            Swal.fire('Success', `Rating submitted successfully!`, 'success');
-            updateRatingDisplay(sewerName);
-        } else {
-            throw new Error(data.error || 'Failed to submit rating');
-        }
-    })
-    .catch(error => {
-        console.error('Rating error:', error);
-        Swal.fire('Error', error.message, 'error');
-    });
-}
-
-function updateRatingDisplay(sewerName) {
-    const sewerCard = document.querySelector(`.contact-card[data-sewer="${sewerName}"]`);
-    if (!sewerCard) return;
-
-    const ratingDisplay = sewerCard.querySelector('.rating-display');
-    if (!ratingDisplay) return;
-
-    fetch(`handle_ratings.php?sewerName=${encodeURIComponent(sewerName)}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                ratingDisplay.textContent = `★ ${data.averageRating.toFixed(1)} (${data.totalRatings} ratings)`;
-                ratingDisplay.style.color = '#ffd700';
-            } else {
-                throw new Error(data.error || 'Unknown error occurred');
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching rating:', error);
-            ratingDisplay.textContent = 'Error loading rating';
-            ratingDisplay.style.color = '#ff0000';
-        });
-}
-

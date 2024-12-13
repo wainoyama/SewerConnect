@@ -1,11 +1,3 @@
-<?php
-require_once 'authentication.php';
-
-if (!isLoggedIn()) {
-    header('Location: ./users/login.php');
-    exit();
-}
-?>
 <!DOCTYPE html>
 <html lang="tl">
 <head>
@@ -25,10 +17,6 @@ if (!isLoggedIn()) {
             <div class="logo">
                 <img src="./assets/logo.png" alt="Sewer Connect Logo">
                 <h1>Sewer Connect</h1>
-            </div>
-            <div class="user-actions">
-                <span>Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?></span>
-                <a href="./users/logout.php">Logout</a>
             </div>
         </div>
     </header>
