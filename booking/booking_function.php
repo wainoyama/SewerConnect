@@ -1,11 +1,22 @@
 <?php
+header('Content-Type: application/json');
+
 function bookSewer($sewerName, $sewerEmail) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $customerName = $_POST['customerName'];
-        $customerPhone = $_POST['customerPhone'];
-        $customerEmail = $_POST['customerEmail'];
-        $projectDate = $_POST['projectDate'];
-        $projectDescription = $_POST['projectDescription'];
+        $customerName = $_POST['customerName'] ?? '';
+        $customerPhone = $_POST['customerPhone'] ?? '';
+        $customerEmail = $_POST['customerEmail'] ?? '';
+        $projectDate = $_POST['projectDate'] ?? '';
+        $projectDescription = $_POST['projectDescription'] ?? '';
+
+        // Validate inputs
+        if (empty($customerName) || empty($customerPhone) || empty($customerEmail) || 
+            empty($projectDate) || empty($projectDescription)) {
+            return json_encode([
+                'success' => false, 
+                'message' => 'All fields are required.'
+            ]);
+        }
 
         $to = $sewerEmail;
         $subject = "Abiso: May Bagong Booking para sa Inyong Serbisyo";
@@ -36,10 +47,21 @@ function bookSewer($sewerName, $sewerEmail) {
         $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
         if (mail($to, $subject, $message, $headers)) {
-            return json_encode(['success' => true, 'message' => 'Booking successful. The sewer has been notified.']);
+            return json_encode([
+                'success' => true, 
+                'message' => 'Booking successful. The sewer has been notified.'
+            ]);
         } else {
-            return json_encode(['success' => false, 'message' => 'Booking failed. Please try again later.']);
+            return json_encode([
+                'success' => false, 
+                'message' => 'Booking failed. Please try again later.'
+            ]);
         }
     }
+    
+    return json_encode([
+        'success' => false, 
+        'message' => 'Invalid request method.'
+    ]);
 }
 ?>

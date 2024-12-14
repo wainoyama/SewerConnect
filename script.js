@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         researcherGrid.appendChild(researcherCard);
     });
+    
 
     const samplePhotos = {
         materials: [
@@ -357,18 +358,14 @@ function bookSewer(sewerName, sewerEmail) {
             formData.append('sewerName', sewerName);
             formData.append('sewerEmail', sewerEmail);
 
-            return fetch('booking/book_sewer.php', {
+            return fetch('booking/booking_function.php', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.text())
-            .then(text => {
-                try {
-                    return JSON.parse(text);
-                } catch (error) {
-                    console.error('Error parsing JSON:', text);
-                    throw new Error('Server response was not valid JSON');
-                }
+            .then(response => response.json())
+            .catch(error => {
+                console.error('Error:', error);
+                throw new Error('Network error occurred');
             })
             .then(data => {
                 if (data.success) {
