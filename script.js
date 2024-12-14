@@ -348,39 +348,44 @@ function bookSewer(sewerName, sewerEmail) {
         showCancelButton: true,
         confirmButtonText: 'Book Now',
         cancelButtonText: 'Cancel',
-        preConfirm: () => {
-            const form = document.getElementById('bookingForm');
-            if (!form.checkValidity()) {
-                Swal.showValidationMessage('Please fill in all required fields');
-                return false;
-            }
-            const formData = new FormData(form);
-            formData.append('sewerName', sewerName);
-            formData.append('sewerEmail', sewerEmail);
-
-            return fetch('booking/booking_function.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .catch(error => {
-                console.error('Error:', error);
-                throw new Error('Network error occurred');
-            })
-            .then(data => {
-                if (data.success) {
-                    return data.message;
-                } else {
-                    throw new Error(data.message || 'An unknown error occurred');
+        preConfirm: async () => {
+            try {
+                const form = document.getElementById('bookingForm');
+                if (!form.checkValidity()) {
+                    Swal.showValidationMessage('Please fill in all required fields');
+                    return false;
                 }
-            });
+
+                const formData = new FormData(form);
+                formData.append('sewerName', sewerName);
+                formData.append('sewerEmail', sewerEmail);
+
+                const response = await fetch('booking/book_sewer.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (!data.success) {
+                    throw new Error(data.message || 'Booking failed');
+                }
+
+                return data.message;
+            } catch (error) {
+                console.error('Booking error:', error);
+                throw new Error(error.message || 'Network error occurred. Please try again.');
+            }
         }
     }).then((result) => {
-        if (result.isConfirmed) {
+        if (result.isConfirmed && result.value) {
             Swal.fire('Booked!', result.value, 'success');
         }
     }).catch(error => {
         console.error('Booking error:', error);
-        Swal.fire('Error', error.message, 'error');
+        Swal.fire('Error', error.message || 'An unexpected error occurred', 'error');
     });
 }
